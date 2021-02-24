@@ -1,7 +1,6 @@
+import { RoomServiceProvider } from "@roomservice/react";
+import useUserID from "../hooks/use-user-id";
 import "../styles/globals.css";
-import { RoomServiceParameters, RoomServiceProvider } from "@roomservice/react";
-import { useEffect, useState } from "react";
-import { customAlphabet, nanoid } from "nanoid";
 
 async function myAuthFunction(params: {
   room: string;
@@ -56,29 +55,6 @@ function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
     </RoomServiceProvider>
   );
-}
-
-//  Stores a random userID in localStorage. Remove this once you have integrated
-//  your own authentication scheme.
-function useUserID(): string | null {
-  const [userID, setUserID] = useState<string | null>(null);
-
-  //  useEffect forces this to happen on the client, since `window` is not
-  //  available on the server during server-side rendering
-  useEffect(() => {
-    let userID = window.localStorage.getItem("roomservice-user");
-    if (userID == null) {
-      const generateBase62ID = customAlphabet(
-        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-        22
-      );
-      userID = generateBase62ID();
-      window.localStorage.setItem("roomservice-user", userID);
-    }
-    setUserID(userID);
-  }, []);
-
-  return userID;
 }
 
 export default MyApp;
