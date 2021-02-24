@@ -1,5 +1,6 @@
 import { RoomServiceProvider } from "@roomservice/react";
 import useUserID from "../hooks/use-user-id";
+import Head from "next/head";
 import "../styles/globals.css";
 
 async function myAuthFunction(params: {
@@ -40,20 +41,26 @@ async function myAuthFunction(params: {
 function MyApp({ Component, pageProps }) {
   const userID = useUserID();
   return (
-    <RoomServiceProvider
-      //  Don't connect until the userID is set
-      online={userID !== null}
-      clientParameters={{
-        auth: myAuthFunction,
-        //  Passed into myAuthFunction when RoomService connects. Include
-        //  anything you need here to identify the user on the server.
-        ctx: {
-          userID,
-        },
-      }}
-    >
-      <Component {...pageProps} />
-    </RoomServiceProvider>
+    <>
+      <Head>
+        <title>Figma Cursors</title>
+        <meta name="viewport" content="width=device-width"></meta>
+      </Head>
+      <RoomServiceProvider
+        //  Don't connect until the userID is set
+        online={userID !== null}
+        clientParameters={{
+          auth: myAuthFunction,
+          //  Passed into myAuthFunction when RoomService connects. Include
+          //  anything you need here to identify the user on the server.
+          ctx: {
+            userID,
+          },
+        }}
+      >
+        <Component {...pageProps} />
+      </RoomServiceProvider>
+    </>
   );
 }
 
