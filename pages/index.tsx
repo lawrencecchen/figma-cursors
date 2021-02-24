@@ -5,7 +5,7 @@ import useInterval from "../hooks/use-interval";
 import useMousePosition from "../hooks/use-mouse-position";
 import useUserID from "../hooks/use-user-id";
 
-const COLORS = ["#59114D", "#E98A15", "#003B36", "#012622"];
+const COLORS = ["#eb0fc6", "#E98A15", "#003B36", "#012622"];
 
 export default function Home() {
   const { x, y } = useMousePosition();
@@ -27,8 +27,7 @@ export default function Home() {
       {Object.entries(cursors)
         .filter(([key, _]) => key !== userId)
         .map(([userId, cursor]) => (
-          <Cursor
-            key={userId}
+          <div
             style={{
               position: "absolute",
               left: 0,
@@ -39,7 +38,21 @@ export default function Home() {
               }px, 0px)`,
               color: (cursor as any)?.color || "black",
             }}
-          />
+          >
+            <Cursor key={userId} />
+            <div
+              style={{
+                backgroundColor: (cursor as any)?.color,
+                position: "absolute",
+                transform: "translate3d(30px, -10px, 0px)",
+                color: "white",
+                padding: "0.2rem 0.25rem",
+                fontSize: "0.75rem",
+              }}
+            >
+              Anonymous
+            </div>
+          </div>
         ))}
     </div>
   );
