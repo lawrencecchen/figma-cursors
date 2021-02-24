@@ -24,7 +24,6 @@ export default function Home() {
 
   return (
     <div className="window">
-      <button>clck me</button>
       {Object.entries(cursors)
         .filter(([key, _]) => key !== userId)
         .map(([userId, cursor]) => (
